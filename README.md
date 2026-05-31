@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MediFind
 
 **Find medicine near you — before you walk to the shop.**
@@ -321,3 +322,6 @@ This project is for learning and demo purposes. You may adapt it for school or p
 **MediFind** — helping people spend less time searching and more time getting better.
 
 If this README helped you, give the repo a star on GitHub.
+=======
+# medifind
+>>>>>>> c4b9080a249209e369db432016415ea1da798b2e
