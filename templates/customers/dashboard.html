@@ -1,0 +1,97 @@
+{% extends "base_customer.html" %}
+{% block title %}My Enquiries • MediFind{% endblock %}
+
+{% block content %}
+  <div class="container py-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+      <div>
+        <div class="text-muted small">Customer dashboard</div>
+        <h2 class="fw-bold mb-0">My Enquiries</h2>
+        {% if customer_phone %}
+          <div class="text-muted small mt-2"><i class="bi bi-telephone me-1"></i>{{ customer_phone }}</div>
+        {% endif %}
+      </div>
+      <a class="btn btn-primary" href="{% url 'home' %}#search"><i class="bi bi-search me-1"></i>Search medicine</a>
+    </div>
+
+    {% if not customer_phone %}
+      <div class="alert alert-info border-0 shadow-sm">
+        <div class="fw-semibold">No enquiries yet.</div>
+        <div class="small">Create an enquiry from a medicine search to see your status here.</div>
+      </div>
+    {% else %}
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="card card-soft p-3">
+            <div class="text-muted small">Pending</div>
+            <div class="fs-3 fw-bold">{{ pending_count }}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-soft p-3">
+            <div class="text-muted small">Accepted</div>
+            <div class="fs-3 fw-bold text-success">{{ accepted_count }}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-soft p-3">
+            <div class="text-muted small">Rejected</div>
+            <div class="fs-3 fw-bold text-danger">{{ rejected_count }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-soft">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Medicine</th>
+                  <th>Shop</th>
+                  <th>Qty</th>
+                  <th>Status</th>
+                  <th class="text-nowrap">Time</th>
+                  <th class="text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in enquiry_rows %}
+                  {% with e=row.enquiry %}
+                  <tr>
+                    <td class="fw-semibold">{{ e.medicine_name }}</td>
+                    <td class="text-muted">{{ e.shop.name }}</td>
+                    <td>{{ e.quantity }}</td>
+                    <td>
+                      {% if e.status == "pending" %}
+                        <span class="badge text-bg-warning">Pending</span>
+                      {% elif e.status == "accepted" %}
+                        <span class="badge text-bg-success">Medicine Available</span>
+                      {% else %}
+                        <span class="badge text-bg-danger">Rejected</span>
+                      {% endif %}
+                    </td>
+                    <td class="text-muted text-nowrap">{{ e.created_at|date:"M d, Y • H:i" }}</td>
+                    <td class="text-end text-nowrap">
+                      {% if row.show_navigate %}
+                        <a href="{{ row.navigate_url }}" target="_blank" rel="noreferrer" class="btn btn-sm btn-primary">
+                          <i class="bi bi-map me-1"></i>Navigate
+                        </a>
+                      {% else %}
+                        <span class="text-muted small">—</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endwith %}
+                {% empty %}
+                  <tr><td colspan="6" class="text-muted">No enquiries found.</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}
+

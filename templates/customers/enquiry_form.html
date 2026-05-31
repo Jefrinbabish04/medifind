@@ -1,0 +1,63 @@
+{% extends "base_customer.html" %}
+{% block title %}Enquiry • MediFind{% endblock %}
+
+{% block content %}
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="mb-4">
+          <div class="text-muted small">Medicine enquiry</div>
+          <h2 class="fw-bold mb-0">Request “{{ medicine.name }}”</h2>
+          <div class="text-muted mt-2">
+            Shop: <span class="fw-semibold">{{ shop.name }}</span> • Stock: <span class="fw-semibold">{{ inventory.stock_quantity }}</span> • Price: <span class="fw-semibold">₹ {{ inventory.price }}</span>
+          </div>
+        </div>
+
+        <div class="card card-soft p-4">
+          <form method="POST" novalidate>
+            {% csrf_token %}
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Customer Name</label>
+                {{ form.customer_name }}
+                {% if form.customer_name.errors %}
+                  <div class="text-danger small mt-1">{{ form.customer_name.errors|striptags }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Phone Number</label>
+                {{ form.customer_phone }}
+                {% if form.customer_phone.errors %}
+                  <div class="text-danger small mt-1">{{ form.customer_phone.errors|striptags }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-semibold">Quantity Required</label>
+                {{ form.quantity }}
+                {% if form.quantity.errors %}
+                  <div class="text-danger small mt-1">{{ form.quantity.errors|striptags }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <div class="d-flex gap-2 mt-2">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-send me-1"></i>Submit Enquiry
+                  </button>
+                  <a class="btn btn-outline-secondary" href="{% url 'search_medicine' %}?q={{ medicine.name|urlencode }}">
+                    Back to results
+                  </a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="text-muted small mt-3">
+          After submission, track status in <a href="{% url 'customer_dashboard' %}">My Enquiries</a>.
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

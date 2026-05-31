@@ -1,0 +1,27 @@
+:root{
+  --mf-primary:#2563eb;
+  --mf-success:#10b981;
+  --mf-danger:#ef4444;
+  --mf-dark:#0f172a;
+  --mf-surface:#f5f7fb;
+}
+
+html, body { font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+.bg-surface{ background: var(--mf-surface); }
+.text-primary{ color: var(--mf-primary) !important; }
+.btn-primary{ background: var(--mf-primary); border-color: var(--mf-primary); }
+.btn-primary:hover{ filter: brightness(.95); }
+.btn-success{ background: var(--mf-success); border-color: var(--mf-success); }
+.btn-danger{ background: var(--mf-danger); border-color: var(--mf-danger); }
+.card-soft{ border:0; border-radius: 18px; box-shadow: 0 12px 30px rgba(15,23,42,.08); }
+.badge-soft{ background: rgba(37,99,235,.1); color: var(--mf-primary); }
+.icon-pill{ width:46px; height:46px; border-radius:14px; display:flex; align-items:center; justify-content:center; background: rgba(37,99,235,.10); color: var(--mf-primary); }
+.hover-rise{ transition: transform .15s ease, box-shadow .15s ease; }
+.hover-rise:hover{ transform: translateY(-2px); box-shadow: 0 14px 35px rgba(15,23,42,.12); }
+.form-control, .form-select{ border-radius: 12px; padding: .75rem .9rem; }
+.input-group .form-control{ border-top-right-radius:0; border-bottom-right-radius:0; }
+.input-group .btn{ border-top-left-radius:0; border-bottom-left-radius:0; }
+.suggest-box{ position:absolute; z-index: 999; width:100%; }
+.suggest-item{ cursor:pointer; }
+.suggest-item:hover{ background:#f1f5f9; }
+

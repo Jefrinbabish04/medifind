@@ -1,0 +1,71 @@
+{% extends "base_shop.html" %}
+{% block title %}Enquiries • MediFind Shop{% endblock %}
+
+{% block content %}
+  <div class="container pb-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+      <div>
+        <div class="text-muted small">Customer enquiries</div>
+        <h2 class="fw-bold mb-0">{{ shop.name }}</h2>
+      </div>
+      <a class="btn btn-outline-primary" href="{% url 'shop_dashboard' %}">
+        <i class="bi bi-speedometer2 me-1"></i>Dashboard
+      </a>
+    </div>
+
+    <div class="card card-soft">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Medicine</th>
+                <th>Qty</th>
+                <th>Status</th>
+                <th class="text-nowrap">Time</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for e in enquiries %}
+                <tr>
+                  <td class="fw-semibold">{{ e.customer_name }}</td>
+                  <td><a class="link-secondary text-decoration-none" href="tel:{{ e.customer_phone }}">{{ e.customer_phone }}</a></td>
+                  <td>{{ e.medicine_name }}</td>
+                  <td>{{ e.quantity }}</td>
+                  <td>
+                    {% if e.status == "pending" %}
+                      <span class="badge text-bg-warning">Pending</span>
+                    {% elif e.status == "accepted" %}
+                      <span class="badge text-bg-success">Accepted</span>
+                    {% else %}
+                      <span class="badge text-bg-danger">Rejected</span>
+                    {% endif %}
+                  </td>
+                  <td class="text-muted text-nowrap">{{ e.created_at|date:"M d, Y • H:i" }}</td>
+                  <td class="text-end text-nowrap">
+                    {% if e.status == "pending" %}
+                      <a class="btn btn-sm btn-success" href="{% url 'shop_enquiry_accept' e.id %}">
+                        <i class="bi bi-check2 me-1"></i>Accept
+                      </a>
+                      <a class="btn btn-sm btn-outline-danger" href="{% url 'shop_enquiry_reject' e.id %}">
+                        <i class="bi bi-x-lg me-1"></i>Reject
+                      </a>
+                    {% else %}
+                      <span class="text-muted small">No actions</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="7" class="text-muted">No enquiries yet.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

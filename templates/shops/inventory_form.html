@@ -1,0 +1,81 @@
+{% extends "base_shop.html" %}
+{% block title %}{% if mode == "edit" %}Edit Inventory{% else %}Add Inventory{% endif %} • MediFind Shop{% endblock %}
+
+{% block content %}
+  <div class="container pb-5">
+    <div class="mb-4">
+      <div class="text-muted small">Inventory</div>
+      <h2 class="fw-bold mb-0">{% if mode == "edit" %}Edit item{% else %}Add to inventory{% endif %}</h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <div class="card card-soft p-4">
+          <h5 class="fw-bold mb-3">Inventory item</h5>
+          <form method="POST" novalidate>
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label fw-semibold">Medicine</label>
+                {{ form.medicine }}
+                {% if form.medicine.errors %}<div class="text-danger small mt-1">{{ form.medicine.errors|striptags }}</div>{% endif %}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-semibold">Stock Quantity</label>
+                {{ form.stock_quantity }}
+                {% if form.stock_quantity.errors %}<div class="text-danger small mt-1">{{ form.stock_quantity.errors|striptags }}</div>{% endif %}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-semibold">Price</label>
+                {{ form.price }}
+                {% if form.price.errors %}<div class="text-danger small mt-1">{{ form.price.errors|striptags }}</div>{% endif %}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-semibold">Expiry Date</label>
+                {{ form.expiry_date }}
+                {% if form.expiry_date.errors %}<div class="text-danger small mt-1">{{ form.expiry_date.errors|striptags }}</div>{% endif %}
+              </div>
+            </div>
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <button class="btn btn-primary" type="submit" name="save_inventory">
+                <i class="bi bi-check2-circle me-1"></i>Save
+              </button>
+              <a class="btn btn-outline-secondary" href="{% url 'shop_inventory_list' %}">Back</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card card-soft p-4">
+          <h5 class="fw-bold mb-3">Quick add medicine</h5>
+          <form method="POST" novalidate>
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label fw-semibold">Name</label>
+                {{ med_form.name }}
+                {% if med_form.name.errors %}<div class="text-danger small mt-1">{{ med_form.name.errors|striptags }}</div>{% endif %}
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">Brand</label>
+                {{ med_form.brand }}
+                {% if med_form.brand.errors %}<div class="text-danger small mt-1">{{ med_form.brand.errors|striptags }}</div>{% endif %}
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-semibold">Category</label>
+                {{ med_form.category }}
+                {% if med_form.category.errors %}<div class="text-danger small mt-1">{{ med_form.category.errors|striptags }}</div>{% endif %}
+              </div>
+            </div>
+            <button class="btn btn-outline-primary w-100 mt-4" type="submit" name="create_medicine">
+              <i class="bi bi-plus-lg me-1"></i>Create medicine
+            </button>
+            <div class="text-muted small mt-2">After creating, it will appear in the medicine dropdown.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
